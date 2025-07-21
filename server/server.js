@@ -1,4 +1,3 @@
-// server/server.js
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
@@ -24,14 +23,14 @@ app.get('/files', (req, res) => {
   });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
-
-
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve frontend (built React from Vite)
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
